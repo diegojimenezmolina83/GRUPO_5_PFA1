@@ -3,7 +3,7 @@
  */
 
 package com.mycompany.grupo_5_pfa1;
-import java.util.Date; 
+import java.util.Date;
 
 /**
  * @author Grupo 5
@@ -38,42 +38,56 @@ public class GRUPO_5_PFA1 {
         GestorAtencion gestor = new GestorAtencion(colaPreferencial, colaRegular);
 
         // **
-        // CREACIÓN DE PACIENTES
+        // CREACIÓN DE PACIENTES (hardcodeado — reemplazado por seleccionarFicha)
         // **
 
         // Crea paciente regular número 1.
-        Paciente paciente1 = new Paciente("R1","101010101","Carlos Mora",new Date());
+        // Paciente paciente1 = new Paciente("R1","101010101","Carlos Mora",new Date());
 
         // Crea paciente regular número 2.
-        Paciente paciente2 = new Paciente("R2","202020202","Ana Solis",new Date());
+        // Paciente paciente2 = new Paciente("R2","202020202","Ana Solis",new Date());
 
         // Crea paciente preferencial número 1.
-        Paciente paciente3 = new Paciente("P1","303030303","Luis Rojas",new Date());
+        // Paciente paciente3 = new Paciente("P1","303030303","Luis Rojas",new Date());
 
         // Crea paciente preferencial número 2.
-        Paciente paciente4 = new Paciente("P2","404040404","Maria Perez",new Date());
+        // Paciente paciente4 = new Paciente("P2","404040404","Maria Perez",new Date());
 
         // Crea paciente preferencial número 3.
-        Paciente paciente5 = new Paciente("P3","505050505","Jorge Castro",new Date());
+        // Paciente paciente5 = new Paciente("P3","505050505","Jorge Castro",new Date());
 
         // **
-        // INSERTAR PACIENTES EN COLAS
+        // INSERTAR PACIENTES EN COLAS (hardcodeado — reemplazado por seleccionarFicha)
         // **
 
         // Inserta paciente regular 1 en la cola regular.
-        colaRegular.encolar(paciente1);
+        // colaRegular.encolar(paciente1);
 
         // Inserta paciente regular 2 en la cola regular.
-        colaRegular.encolar(paciente2);
+        // colaRegular.encolar(paciente2);
 
         // Inserta paciente preferencial 1 en la cola preferencial.
-        colaPreferencial.encolar(paciente3);
+        // colaPreferencial.encolar(paciente3);
 
         // Inserta paciente preferencial 2 en la cola preferencial.
-        colaPreferencial.encolar(paciente4);
+        // colaPreferencial.encolar(paciente4);
 
         // Inserta paciente preferencial 3 en la cola preferencial.
-        colaPreferencial.encolar(paciente5);
+        // colaPreferencial.encolar(paciente5);
+
+        // **
+        // REGISTRO DE PACIENTES MEDIANTE SELECCIÓN DE FICHA
+        // **
+
+        // Muestra título de la sección de registro.
+        System.out.println("Registro de pacientes:");
+
+        // Registra 5 pacientes interactivamente mediante JOptionPane.
+        gestor.seleccionarFicha();
+        gestor.seleccionarFicha();
+        gestor.seleccionarFicha();
+        gestor.seleccionarFicha();
+        gestor.seleccionarFicha();
 
         // Imprime línea en blanco.
         System.out.println();

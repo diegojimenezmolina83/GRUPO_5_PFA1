@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.grupo_5_pfa1;
+import java.text.SimpleDateFormat;
 
 /**
  * Clase ColaBase.
@@ -112,10 +113,15 @@ public class ColaBase {
             System.out.println(distintivo + " No hay fichas pendientes."); // Muestra mensaje de cola vacía.
             return; // Sale del método.
         } 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); // Define el formato del timestamp.
         while (aux != null) { // Recorre la cola mientras existan nodos.
-            System.out.println(distintivo + " Ficha: "+ aux.getPaciente().getFicha()+ " | Cedula: "+ aux.getPaciente().getCedula()+ " | Nombre: "+ aux.getPaciente().getNombre()); // Imprime los datos del paciente.
+            System.out.println(distintivo
+                + " Ficha: "    + aux.getPaciente().getFicha()
+                + " | Cedula: " + aux.getPaciente().getCedula()
+                + " | Nombre: " + aux.getPaciente().getNombre()
+                + " | Llegada: "+ sdf.format(aux.getPaciente().getFechaLlegada())); // Imprime todos los datos incluyendo timestamp.
             aux = aux.getSiguiente(); // Avanza al siguiente nodo.
-        } 
+        }
     } 
 
     /**

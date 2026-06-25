@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.grupo_5_pfa1;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,12 +14,110 @@ public class GestorAtencion { // Inicio de la clase GestorAtencion.
     private ColaPacientes colaPreferencial; // Guarda la cola de pacientes preferenciales.
     private ColaPacientes colaRegular; // Guarda la cola de pacientes regulares.
     private int contadorPreferenciales; // Cuenta cuántos pacientes preferenciales se atendieron de forma seguida.
+    private int contadorFichaRegular; // Lleva el número consecutivo de fichas regulares asignadas.
+    private int contadorFichaPreferencial; // Lleva el número consecutivo de fichas preferenciales asignadas.
+    private int contadorFichaGlobal; // Lleva el número consecutivo global cuando se usa secuencia única.
+    private boolean secuenciaUnica; // Indica si R y P comparten un único contador (true) o cuentan por separado (false).
 
-    public GestorAtencion(ColaPacientes colaPreferencial, ColaPacientes colaRegular) { // Constructor que recibe las dos colas.
+    public GestorAtencion(ColaPacientes colaPreferencial, ColaPacientes colaRegular) { // Constructor con secuencia separada por defecto.
         this.colaPreferencial = colaPreferencial; // Asigna la cola preferencial recibida al atributo colaPreferencial.
         this.colaRegular = colaRegular; // Asigna la cola regular recibida al atributo colaRegular.
         this.contadorPreferenciales = 0; // Inicializa el contador de preferenciales en cero.
-    } 
+        this.contadorFichaRegular = 0; // Inicializa el contador de fichas regulares en cero.
+        this.contadorFichaPreferencial = 0; // Inicializa el contador de fichas preferenciales en cero.
+        this.contadorFichaGlobal = 0; // Inicializa el contador global en cero.
+        this.secuenciaUnica = false; // Por defecto usa secuencia separada (R1,R2... / P1,P2...).
+    }
+
+    public GestorAtencion(ColaPacientes colaPreferencial, ColaPacientes colaRegular, boolean secuenciaUnica) { // Constructor que permite elegir tipo de secuencia.
+        this(colaPreferencial, colaRegular); // Llama al constructor base.
+        this.secuenciaUnica = secuenciaUnica; // Asigna el tipo de secuencia indicado.
+    }
+
+    /**
+     * Muestra el submenú de tipo de paciente, solicita cédula y nombre,
+     * genera la ficha consecutiva según la secuencia configurada e inserta
+     * el paciente en la cola correcta.
+     * @param scanner Scanner activo para leer la entrada del usuario.
+     */
+    public void seleccionarFicha() { // Inicio del método interactivo seleccionarFicha con JOptionPane.
+        String[] opciones = {"Paciente Regular", "Paciente Preferencial"}; // Opciones del diálogo.
+        int eleccion = JOptionPane.showOptionDialog( // Muestra el diálogo de selección de tipo.
+            null,
+            "Seleccione el tipo de paciente:",
+            "Seleccionar Ficha",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            opciones,
+            opciones[0]
+        );
+
+        if (eleccion == JOptionPane.CLOSED_OPTION) { // Valida si el usuario cerró el diálogo.
+            return; // Sale del método sin realizar ninguna acción.
+        }
+
+        char tipo = (eleccion == 0) ? 'R' : 'P'; // Asigna 'R' si eligió Regular, 'P' si eligió Preferencial.
+
+        String cedula = JOptionPane.showInputDialog(null, "Ingrese el número de cédula del paciente:", "Seleccionar Ficha", JOptionPane.PLAIN_MESSAGE); // Solicita la cédula.
+        if (cedula == null || cedula.trim().isEmpty()) { // Valida si la cédula está vacía o se canceló.
+            JOptionPane.showMessageDialog(null, "Cédula inválida. Operación cancelada.", "Error", JOptionPane.ERROR_MESSAGE); // Muestra error.
+            return; // Sale del método.
+        }
+
+        String nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre completo del paciente:", "Seleccionar Ficha", JOptionPane.PLAIN_MESSAGE); // Solicita el nombre.
+        if (nombre == null || nombre.trim().isEmpty()) { // Valida si el nombre está vacío o se canceló.
+            JOptionPane.showMessageDialog(null, "Nombre inválido. Operación cancelada.", "Error", JOptionPane.ERROR_MESSAGE); // Muestra error.
+            return; // Sale del método.
+        }
+
+        seleccionarFichaLogica(cedula.trim(), nombre.trim(), tipo); // Delega la lógica de generación e inserción.
+    }
+
+    /**
+     * Genera la ficha, crea el paciente y lo inserta en la cola correspondiente.
+     * Secuencia separada (defecto): R → R1, R2, R3... / P → P1, P2, P3...
+     * Secuencia única:              compartida → R1, P2, R3, P4...
+     * @param cedula Cédula del paciente.
+     * @param nombre Nombre del paciente.
+     * @param tipo   Tipo de ficha: 'R' para regular, 'P' para preferencial.
+     * @return Paciente creado e insertado, o null si el tipo es inválido.
+     */
+    public Paciente seleccionarFichaLogica(String cedula, String nombre, char tipo) { // Inicio del método de lógica de seleccionarFicha.
+        String ficha; // Variable que almacenará el código de ficha generado.
+        Paciente nuevoPaciente; // Variable que almacenará el paciente creado.
+
+        if (tipo == 'R' || tipo == 'r') { // Valida si el tipo ingresado es regular.
+            if (secuenciaUnica) { // Valida si se usa secuencia única compartida.
+                contadorFichaGlobal++; // Incrementa el contador global.
+                ficha = "R" + contadorFichaGlobal; // Genera ficha con número global.
+            } else { // Si usa secuencia separada.
+                contadorFichaRegular++; // Incrementa el contador exclusivo de regulares.
+                ficha = "R" + contadorFichaRegular; // Genera ficha con número de regulares.
+            }
+            nuevoPaciente = new Paciente(ficha, cedula, nombre, new java.util.Date()); // Crea el paciente con la ficha generada y timestamp actual.
+            colaRegular.encolar(nuevoPaciente); // Inserta el paciente en la cola regular.
+            JOptionPane.showMessageDialog(null, "Su número de ficha es la: " + ficha, "Ficha Asignada", JOptionPane.INFORMATION_MESSAGE); // Muestra la ficha asignada.
+            return nuevoPaciente; // Retorna el paciente insertado.
+
+        } else if (tipo == 'P' || tipo == 'p') { // Valida si el tipo ingresado es preferencial.
+            if (secuenciaUnica) { // Valida si se usa secuencia única compartida.
+                contadorFichaGlobal++; // Incrementa el contador global.
+                ficha = "P" + contadorFichaGlobal; // Genera ficha con número global.
+            } else { // Si usa secuencia separada.
+                contadorFichaPreferencial++; // Incrementa el contador exclusivo de preferenciales.
+                ficha = "P" + contadorFichaPreferencial; // Genera ficha con número de preferenciales.
+            }
+            nuevoPaciente = new Paciente(ficha, cedula, nombre, new java.util.Date()); // Crea el paciente con la ficha generada y timestamp actual.
+            colaPreferencial.encolar(nuevoPaciente); // Inserta el paciente en la cola preferencial.
+            JOptionPane.showMessageDialog(null, "Su número de ficha es la: " + ficha, "Ficha Asignada", JOptionPane.INFORMATION_MESSAGE); // Muestra la ficha asignada.
+            return nuevoPaciente; // Retorna el paciente insertado.
+
+        } else { // Si el tipo ingresado no es válido.
+            System.out.println("Tipo de ficha inválido."); // Muestra mensaje de error.
+            return null; // Retorna null porque no se pudo crear el paciente.
+        }
+    }
 
     public Paciente atenderPaciente() { // Método que atiende un paciente según la regla 2 preferenciales y 1 regular.
         Paciente pacienteAtendido = null; // Variable donde se guardará el paciente que será atendido.
