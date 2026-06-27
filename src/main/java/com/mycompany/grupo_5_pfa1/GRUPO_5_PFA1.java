@@ -131,33 +131,14 @@ public class GRUPO_5_PFA1 {
         // Imprime línea en blanco.
         System.out.println();
 
+       
         // Muestra título para la prueba de abandono.
         System.out.println("Prueba de abandono de cola:");
-
-        // Elimina de la cola regular el paciente con ficha R2.
-        Paciente pacienteEliminado = colaRegular.eliminarPorFicha("R2");
-
-        // Verifica si el paciente fue encontrado.
-        if (pacienteEliminado != null) {
-
-            // Muestra mensaje solicitado por el enunciado.
-            System.out.println("Ficha # " + pacienteEliminado.getFicha() + " con cédula " + pacienteEliminado.getCedula() + " abandona la cola sin ser atendido (a).");
-
-            // Crea la queja asociada al paciente.
-            Queja queja = new Queja(pacienteEliminado.getFicha(),pacienteEliminado.getCedula(),"Tiempo de espera muy alto",new Date());
-
-            // Inserta la queja en la pila.
-            pilaQuejas.apilar(queja);
-        } 
         
-        else {
-
-            // Muestra mensaje si no se encontró la ficha.
+        boolean abandono= pilaQuejas.abandonarCola(colaRegular, "R2", "Tiempo de espera muy alto");
+        if (!abandono){ 
             System.out.println("No se encontró la ficha indicada.");
         }
-
-        // Imprime línea en blanco.
-        System.out.println();
 
         // Muestra título.
         System.out.println("Fichas pendientes despues del abandono:");
