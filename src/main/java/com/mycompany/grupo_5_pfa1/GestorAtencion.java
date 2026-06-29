@@ -38,38 +38,44 @@ public class GestorAtencion { // Inicio de la clase GestorAtencion.
      * Muestra el submenú de tipo de paciente, solicita cédula y nombre,
      * genera la ficha consecutiva según la secuencia configurada e inserta
      * el paciente en la cola correcta.
-     * @param scanner Scanner activo para leer la entrada del usuario.
+     * @param JOptionPane JOptionPane activo para leer la entrada del usuario.
      */
     public void seleccionarFicha() { // Inicio del método interactivo seleccionarFicha con JOptionPane.
         String[] opciones = {"Paciente Regular", "Paciente Preferencial"}; // Opciones del diálogo.
-        int eleccion = JOptionPane.showOptionDialog( // Muestra el diálogo de selección de tipo.
-            null,
-            "Seleccione el tipo de paciente:",
-            "Seleccionar Ficha",
-            JOptionPane.DEFAULT_OPTION,
-            JOptionPane.QUESTION_MESSAGE,
-            null,
-            opciones,
-            opciones[0]
-        );
-
-        if (eleccion == JOptionPane.CLOSED_OPTION) { // Valida si el usuario cerró el diálogo.
-            return; // Sale del método sin realizar ninguna acción.
-        }
+        int eleccion; // Variable que almacenará la elección del usuario.
+        do { // Repite hasta que el usuario seleccione una opción válida.
+            eleccion = JOptionPane.showOptionDialog( // Muestra el diálogo de selección de tipo.
+                null,
+                "Seleccione el tipo de paciente:",
+                "Seleccionar Ficha",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+            );
+            if (eleccion == JOptionPane.CLOSED_OPTION) { // Valida si el usuario cerró el diálogo sin seleccionar.
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de paciente.", "Advertencia", JOptionPane.WARNING_MESSAGE); // Muestra advertencia.
+            }
+        } while (eleccion == JOptionPane.CLOSED_OPTION); // Repite si no se seleccionó ninguna opción.
 
         char tipo = (eleccion == 0) ? 'R' : 'P'; // Asigna 'R' si eligió Regular, 'P' si eligió Preferencial.
 
-        String cedula = JOptionPane.showInputDialog(null, "Ingrese el número de cédula del paciente:", "Seleccionar Ficha", JOptionPane.PLAIN_MESSAGE); // Solicita la cédula.
-        if (cedula == null || cedula.trim().isEmpty()) { // Valida si la cédula está vacía o se canceló.
-            JOptionPane.showMessageDialog(null, "Cédula inválida. Operación cancelada.", "Error", JOptionPane.ERROR_MESSAGE); // Muestra error.
-            return; // Sale del método.
-        }
+        String cedula; // Variable que almacenará la cédula ingresada.
+        do { // Repite hasta que la cédula sea válida.
+            cedula = JOptionPane.showInputDialog(null, "Ingrese el número de cédula del paciente:", "Seleccionar Ficha", JOptionPane.PLAIN_MESSAGE); // Solicita la cédula.
+            if (cedula == null || cedula.trim().isEmpty()) { // Valida si la cédula está vacía o se canceló.
+                JOptionPane.showMessageDialog(null, "La cédula no puede estar vacía. Intente de nuevo.", "Advertencia", JOptionPane.WARNING_MESSAGE); // Muestra advertencia.
+            }
+        } while (cedula == null || cedula.trim().isEmpty()); // Repite si la cédula no es válida.
 
-        String nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre completo del paciente:", "Seleccionar Ficha", JOptionPane.PLAIN_MESSAGE); // Solicita el nombre.
-        if (nombre == null || nombre.trim().isEmpty()) { // Valida si el nombre está vacío o se canceló.
-            JOptionPane.showMessageDialog(null, "Nombre inválido. Operación cancelada.", "Error", JOptionPane.ERROR_MESSAGE); // Muestra error.
-            return; // Sale del método.
-        }
+        String nombre; // Variable que almacenará el nombre ingresado.
+        do { // Repite hasta que el nombre sea válido.
+            nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre completo del paciente:", "Seleccionar Ficha", JOptionPane.PLAIN_MESSAGE); // Solicita el nombre.
+            if (nombre == null || nombre.trim().isEmpty()) { // Valida si el nombre está vacío o se canceló.
+                JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío. Intente de nuevo.", "Advertencia", JOptionPane.WARNING_MESSAGE); // Muestra advertencia.
+            }
+        } while (nombre == null || nombre.trim().isEmpty()); // Repite si el nombre no es válido.
 
         seleccionarFichaLogica(cedula.trim(), nombre.trim(), tipo); // Delega la lógica de generación e inserción.
     }
