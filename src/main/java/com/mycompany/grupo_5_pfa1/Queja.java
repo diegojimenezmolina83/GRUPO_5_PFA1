@@ -1,58 +1,146 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.grupo_5_pfa1;
-import java.util.Date; 
+
+import java.util.Date;
 
 /**
+ * Representa la queja generada cuando un paciente abandona la cola
+ * sin haber sido atendido.
+ * 
+ * Almacena el número de ficha del paciente, su cédula, el motivo declarado
+ * y la fecha y hora exacta en que abandonó la cola.
  *
  * @author Grupo 5
+ * @version 1.0
+ * @see PilaQuejas
+ * @see NodoQueja
  */
-public class Queja { // Inicio de la clase Queja.
-    // Sección de atributos.
-    private String ficha; // Guarda el número de ficha del paciente que abandonó la cola.
-    private String cedula; // Guarda la cédula del paciente que abandonó la cola.
-    private String motivo; // Guarda el motivo por el cual el paciente abandonó la cola.
-    private Date fechaSalida; // Guarda la fecha y hora en que el paciente abandonó la cola.
+public class Queja {
 
-    // Sección de constructores.
-    public Queja() { // Constructor vacío de la clase Queja.
-    } 
-    public Queja(String ficha, String cedula, String motivo, Date fechaSalida) { // Constructor con parámetros.
-        this.ficha = ficha; // Asigna la ficha recibida al atributo ficha.
-        this.cedula = cedula; // Asigna la cédula recibida al atributo cedula.
-        this.motivo = motivo; // Asigna el motivo recibido al atributo motivo.
-        this.fechaSalida = fechaSalida; // Asigna la fecha recibida al atributo fechaSalida.
-    } 
+    /**
+     * Número de ficha del paciente que abandonó la cola.
+     */
+    private String ficha;
 
-    // Sección de getter y setter.
-    public String getFicha() { // Método getter que retorna la ficha.
-        return ficha; // Retorna la ficha de la queja.
-    } 
-    public void setFicha(String ficha) { // Método setter que recibe la ficha.
-        this.ficha = ficha; // Asigna la ficha recibida al atributo ficha.
-    } 
-    public String getCedula() { // Método getter que retorna la cédula.
-        return cedula; // Retorna la cédula de la queja.
-    } 
-    public void setCedula(String cedula) { // Método setter que recibe la cédula.
-        this.cedula = cedula; // Asigna la cédula recibida al atributo cedula.
-    } 
-    public String getMotivo() { // Método getter que retorna el motivo.
-        return motivo; // Retorna el motivo de la queja.
-    } 
-    public void setMotivo(String motivo) { // Método setter que recibe el motivo.
-        this.motivo = motivo; // Asigna el motivo recibido al atributo motivo.
-    } 
-    public Date getFechaSalida() { // Método getter que retorna la fecha de salida.
-        return fechaSalida; // Retorna la fecha y hora de salida.
-    } 
-    public void setFechaSalida(Date fechaSalida) { // Método setter que recibe la fecha de salida.
-        this.fechaSalida = fechaSalida; // Asigna la fecha recibida al atributo fechaSalida.
-    } 
-    public String generarMensaje() { // Método que genera el mensaje solicitado por el enunciado.
-        return "Ficha # " + ficha + " con cédula " + cedula + " abandona la cola sin ser atendido (a) a la fecha y hora " + fechaSalida + " por el siguiente motivo: " + motivo; 
-    } 
+    /**
+     * Cédula de identidad del paciente que abandonó la cola.
+     */
+    private String cedula;
 
-} 
+    /**
+     * Motivo declarado por el paciente al abandonar la cola.
+     */
+    private String motivo;
+
+    /**
+     * Fecha y hora en que el paciente abandonó la cola.
+     */
+    private Date fechaSalida;
+
+    /**
+     * Construye una {@code Queja} sin inicializar ningún atributo.
+     */
+    public Queja() {
+    }
+
+    /**
+     * Construye una {@code Queja} con todos sus atributos inicializados.
+     *
+     * @param ficha       número de ficha del paciente
+     * @param cedula      cédula de identidad del paciente
+     * @param motivo      motivo por el cual el paciente abandona la cola
+     * @param fechaSalida fecha y hora en que el paciente abandona la cola
+     */
+    public Queja(String ficha, String cedula, String motivo, Date fechaSalida) {
+        this.ficha = ficha;
+        this.cedula = cedula;
+        this.motivo = motivo;
+        this.fechaSalida = fechaSalida;
+    }
+
+    /**
+     * Retorna el número de ficha asociado a esta queja.
+     *
+     * @return número de ficha del paciente
+     */
+    public String getFicha() {
+        return ficha;
+    }
+
+    /**
+     * Asigna el número de ficha asociado a esta queja.
+     *
+     * @param ficha número de ficha a asignar
+     */
+    public void setFicha(String ficha) {
+        this.ficha = ficha;
+    }
+
+    /**
+     * Retorna la cédula del paciente asociado a esta queja.
+     *
+     * @return cédula de identidad del paciente
+     */
+    public String getCedula() {
+        return cedula;
+    }
+
+    /**
+     * Asigna la cédula del paciente asociado a esta queja.
+     *
+     * @param cedula cédula de identidad a asignar
+     */
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    /**
+     * Retorna el motivo declarado por el paciente al abandonar la cola.
+     *
+     * @return motivo de abandono
+     */
+    public String getMotivo() {
+        return motivo;
+    }
+
+    /**
+     * Asigna el motivo declarado por el paciente al abandonar la cola.
+     *
+     * @param motivo motivo de abandono a asignar
+     */
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    /**
+     * Retorna la fecha y hora en que el paciente abandonó la cola.
+     *
+     * @return fecha y hora de salida
+     */
+    public Date getFechaSalida() {
+        return fechaSalida;
+    }
+
+    /**
+     * Asigna la fecha y hora en que el paciente abandonó la cola.
+     *
+     * @param fechaSalida fecha y hora de salida a asignar
+     */
+    public void setFechaSalida(Date fechaSalida) {
+        this.fechaSalida = fechaSalida;
+    }
+
+    /**
+     * Genera el mensaje formal de la queja según el formato requerido por el enunciado.
+     * 
+     * Ejemplo de salida:
+     * {@code Ficha # R3 con cédula 123456789 abandona la cola sin ser atendido (a)
+     * a la fecha y hora Mon Jun 29 10:30:00 COT 2026 por el siguiente motivo: Tiempo de espera.}
+     *
+     * @return cadena con el mensaje completo de la queja
+     */
+    public String generarMensaje() {
+        return "Ficha # " + ficha + " con cédula " + cedula
+            + " abandona la cola sin ser atendido (a) a la fecha y hora "
+            + fechaSalida + " por el siguiente motivo: " + motivo;
+    }
+}

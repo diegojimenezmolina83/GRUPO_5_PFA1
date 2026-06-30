@@ -1,64 +1,128 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.grupo_5_pfa1;
+
 import java.util.Date;
 
 /**
+ * Representa a un paciente registrado en el sistema de atención del hospital.
+ * 
+ * Almacena el número de ficha asignado, la cédula de identidad, el nombre
+ * completo y la fecha y hora de llegada del paciente.
  *
  * @author Grupo 5
+ * @version 1.0
  */
+public class Paciente {
 
-public class Paciente { // Inicio de la clase Paciente.
+    /**
+     * Número de ficha asignado al paciente (por ejemplo, {@code R1} o {@code P1}).
+     */
+    private String ficha;
 
-    // Sección de atributos.
-    private String ficha; // Guarda el número de ficha del paciente, por ejemplo R1 o P1.
-    private String cedula; // Guarda el número de cédula del paciente.
-    private String nombre; // Guarda el nombre completo del paciente.
-    private Date fechaLlegada; // Guarda la fecha y hora en que el paciente llegó.
+    /**
+     * Número de cédula de identidad del paciente.
+     */
+    private String cedula;
 
-    // Sección de constructores.
-    public Paciente() { // Constructor vacío de la clase Paciente.
-    } 
-    public Paciente(String ficha, String cedula, String nombre, Date fechaLlegada) { // Constructor con parámetros.
-        this.ficha = ficha; // Asigna el valor recibido al atributo ficha.
-        this.cedula = cedula; // Asigna el valor recibido al atributo cedula.
-        this.nombre = nombre; // Asigna el valor recibido al atributo nombre.
-        this.fechaLlegada = fechaLlegada; // Asigna el valor recibido al atributo fechaLlegada.
-    } 
+    /**
+     * Nombre completo del paciente.
+     */
+    private String nombre;
 
-    // Sección de getter y setter.
-    public String getFicha() { // Método getter que retorna la ficha.
-        return ficha; // Retorna la ficha del paciente.
-    } 
+    /**
+     * Fecha y hora en que el paciente llegó al hospital.
+     */
+    private Date fechaLlegada;
 
-    public void setFicha(String ficha) { // Método setter que recibe la ficha.
-        this.ficha = ficha; // Asigna la ficha recibida al atributo ficha.
-    } 
+    /**
+     * Construye un {@code Paciente} sin inicializar ningún atributo.
+     */
+    public Paciente() {
+    }
 
-    public String getCedula() { // Método getter que retorna la cédula.
-        return cedula; // Retorna la cédula del paciente.
-    } 
+    /**
+     * Construye un {@code Paciente} con todos sus atributos inicializados.
+     *
+     * @param ficha        número de ficha asignado al paciente
+     * @param cedula       número de cédula de identidad del paciente
+     * @param nombre       nombre completo del paciente
+     * @param fechaLlegada fecha y hora de llegada al hospital
+     */
+    public Paciente(String ficha, String cedula, String nombre, Date fechaLlegada) {
+        this.ficha = ficha;
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.fechaLlegada = fechaLlegada;
+    }
 
-    public void setCedula(String cedula) { // Método setter que recibe la cédula.
-        this.cedula = cedula; // Asigna la cédula recibida al atributo cedula.
-    } 
+    /**
+     * Retorna el número de ficha del paciente.
+     *
+     * @return número de ficha (por ejemplo, {@code "R1"} o {@code "P2"})
+     */
+    public String getFicha() {
+        return ficha;
+    }
 
-    public String getNombre() { // Método getter que retorna el nombre.
-        return nombre; // Retorna el nombre del paciente.
-    } 
+    /**
+     * Asigna el número de ficha del paciente.
+     *
+     * @param ficha número de ficha a asignar
+     */
+    public void setFicha(String ficha) {
+        this.ficha = ficha;
+    }
 
-    public void setNombre(String nombre) { // Método setter que recibe el nombre.
-        this.nombre = nombre; // Asigna el nombre recibido al atributo nombre.
-    } 
+    /**
+     * Retorna el número de cédula del paciente.
+     *
+     * @return cédula de identidad del paciente
+     */
+    public String getCedula() {
+        return cedula;
+    }
 
-    public Date getFechaLlegada() { // Método getter que retorna la fecha de llegada.
-        return fechaLlegada; // Retorna la fecha y hora de llegada.
-    } 
+    /**
+     * Asigna el número de cédula del paciente.
+     *
+     * @param cedula cédula de identidad a asignar
+     */
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
 
-    public void setFechaLlegada(Date fechaLlegada) { // Método setter que recibe la fecha de llegada.
-        this.fechaLlegada = fechaLlegada; // Asigna la fecha recibida al atributo fechaLlegada.
-    } 
+    /**
+     * Retorna el nombre completo del paciente.
+     *
+     * @return nombre completo del paciente
+     */
+    public String getNombre() {
+        return nombre;
+    }
 
-} 
+    /**
+     * Asigna el nombre completo del paciente.
+     *
+     * @param nombre nombre completo a asignar
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * Retorna la fecha y hora de llegada del paciente al hospital.
+     *
+     * @return fecha y hora de llegada
+     */
+    public Date getFechaLlegada() {
+        return fechaLlegada;
+    }
+
+    /**
+     * Asigna la fecha y hora de llegada del paciente al hospital.
+     *
+     * @param fechaLlegada fecha y hora de llegada a asignar
+     */
+    public void setFechaLlegada(Date fechaLlegada) {
+        this.fechaLlegada = fechaLlegada;
+    }
+}

@@ -1,84 +1,86 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.grupo_5_pfa1;
 
 /**
- * Clase PilaBase.
- * Implementa una pila usando nodos enlazados.
+ * Implementación de una pila genérica de quejas mediante nodos enlazados.
+ * 
+ * Sigue la política LIFO (Last In, First Out): las quejas se insertan y
+ * se retiran siempre desde la cima. La referencia {@code cima} es
+ * {@code protected} para que {@link PilaQuejas} y las clases del mismo
+ * paquete puedan acceder directamente a la estructura si fuera necesario.
+ *
  * @author Grupo 5
+ * @version 1.0
+ * @see PilaQuejas
+ * @see NodoQueja
+ * @see Queja
  */
-
-public class PilaBase { // Inicio de la clase PilaBase.
-    protected NodoQueja cima; // Guarda la cima de la pila.
+public class PilaBase {
 
     /**
-     * Constructor vacío de PilaBase.
-     * @author Grupo 5
+     * Nodo en la cima de la pila; {@code null} cuando la pila está vacía.
      */
-    
-    public PilaBase() { // Inicio del constructor.
-        this.cima = null; // Inicializa la cima como null.
-    } 
+    protected NodoQueja cima;
 
     /**
-     * Método que inserta una queja en la pila.
-     * @author Grupo 5
-     * @param queja Queja que se desea apilar.
+     * Construye una pila vacía con {@code cima} en {@code null}.
      */
-    
-    public void apilar(Queja queja) { // Inicio del método apilar.
-        NodoQueja nuevoNodo = new NodoQueja(queja); // Crea un nuevo nodo con la queja.
-        if (esVacia()) { // Valida si la pila está vacía.
-            cima = nuevoNodo; // Si está vacía, el nuevo nodo será la cima.
-        } 
-        
-        else { // Si la pila tiene elementos.
-            nuevoNodo.setAnterior(cima); // Enlaza el nuevo nodo con la cima actual.
-            cima = nuevoNodo; // Actualiza la cima al nuevo nodo.
-        } 
-    } 
+    public PilaBase() {
+        this.cima = null;
+    }
 
     /**
-     * Método que elimina la queja de la cima.
-     * @author Grupo 5
-     * @return queja eliminada.
+     * Inserta una queja en la cima de la pila.
+     *
+     * @param queja queja que se desea apilar; no debe ser {@code null}
      */
-    
-    public Queja desapilar() { // Inicio del método desapilar.
-        if (esVacia()) { // Valida si la pila está vacía.
-            return null; // Si está vacía, retorna null.
-        } 
-        Queja quejaEliminada = cima.getQueja(); // Guarda la queja que está en la cima.
-        cima = cima.getAnterior(); // Mueve la cima al nodo anterior.
-        return quejaEliminada; // Retorna la queja eliminada.
-    } 
+    public void apilar(Queja queja) {
+        NodoQueja nuevoNodo = new NodoQueja(queja);
+        if (esVacia()) {
+            cima = nuevoNodo;
+        } else {
+            nuevoNodo.setAnterior(cima);
+            cima = nuevoNodo;
+        }
+    }
 
     /**
-     * Método que indica si la pila está vacía.
-     * @author Grupo 5
-     * @return true si está vacía, false si tiene quejas.
+     * Elimina y retorna la queja que se encuentra en la cima de la pila.
+     *
+     * @return queja eliminada de la cima, o {@code null} si la pila está vacía
      */
-    
-    public boolean esVacia() { // Inicio del método esVacia.
-        return cima == null; // Retorna true si la cima es null.
-    } 
-    
+    public Queja desapilar() {
+        if (esVacia()) {
+            return null;
+        }
+        Queja quejaEliminada = cima.getQueja();
+        cima = cima.getAnterior();
+        return quejaEliminada;
+    }
+
     /**
-     * Método que muestra todas las quejas de la pila.
-     * @author Grupo 5
+     * Indica si la pila no contiene ninguna queja.
+     *
+     * @return {@code true} si la pila está vacía; {@code false} en caso contrario
      */
-    
-    public void mostrarPila() { // Inicio del método mostrarPila.
-        NodoQueja aux = cima; // Crea un auxiliar que inicia en la cima.
-        if (aux == null) { // Valida si no hay quejas.
-            System.out.println("No hay quejas recibidas."); // Muestra mensaje de pila vacía.
-            return; // Sale del método.
-        } 
-        while (aux != null) { // Recorre la pila mientras existan nodos.
-            System.out.println(aux.getQueja().generarMensaje()); // Imprime el mensaje de la queja.
-            aux = aux.getAnterior(); // Avanza al nodo anterior.
-        } 
-    } 
-} 
+    public boolean esVacia() {
+        return cima == null;
+    }
+
+    /**
+     * Imprime en la salida estándar el mensaje de cada queja de la pila,
+     * comenzando desde la cima (queja más reciente) hasta la base.
+     * 
+     * Si la pila está vacía, imprime {@code "No hay quejas recibidas."}.
+     */
+    public void mostrarPila() {
+        NodoQueja aux = cima;
+        if (aux == null) {
+            System.out.println("No hay quejas recibidas.");
+            return;
+        }
+        while (aux != null) {
+            System.out.println(aux.getQueja().generarMensaje());
+            aux = aux.getAnterior();
+        }
+    }
+}

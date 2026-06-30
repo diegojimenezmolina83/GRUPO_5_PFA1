@@ -1,45 +1,78 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.grupo_5_pfa1;
 
 /**
- * Clase NodoPaciente.
- * Representa cada nodo dentro de la cola de pacientes.
+ * Nodo de la lista enlazada utilizada internamente por {@link ColaBase}.
+ * 
+ * Contiene una referencia a un {@link Paciente} y un puntero al siguiente
+ * nodo, permitiendo encadenar los elementos de la cola.
+ *
  * @author Grupo 5
+ * @version 1.0
+ * @see ColaBase
+ * @see Paciente
  */
+public class NodoPaciente {
 
-public class NodoPaciente { // Inicio de la clase NodoPaciente.
+    /**
+     * Paciente almacenado en este nodo.
+     */
+    private Paciente paciente;
 
-    // Sección de atributos.
-    private Paciente paciente; // Guarda el objeto Paciente dentro del nodo.
-    private NodoPaciente siguiente; // Guarda la referencia al siguiente nodo de la cola.
+    /**
+     * Referencia al siguiente nodo de la cola; {@code null} si es el último.
+     */
+    private NodoPaciente siguiente;
 
-    // Sección de constructores.
-    public NodoPaciente() { // Constructor vacío de la clase NodoPaciente.
-    } 
+    /**
+     * Construye un {@code NodoPaciente} vacío sin inicializar ningún atributo.
+     */
+    public NodoPaciente() {
+    }
 
-    public NodoPaciente(Paciente paciente) { // Constructor que recibe un paciente.
-        this.paciente = paciente; // Asigna el paciente recibido al atributo paciente.
-        this.siguiente = null; // Inicializa el siguiente nodo como null.
-    } 
+    /**
+     * Construye un {@code NodoPaciente} con el paciente indicado.
+     * El puntero {@code siguiente} queda en {@code null}.
+     *
+     * @param paciente paciente que almacenará este nodo
+     */
+    public NodoPaciente(Paciente paciente) {
+        this.paciente = paciente;
+        this.siguiente = null;
+    }
 
-    // Sección de getter y setter.
-    public Paciente getPaciente() { // Método getter que retorna el paciente.
-        return paciente; // Retorna el paciente guardado en el nodo.
-    } 
+    /**
+     * Retorna el paciente almacenado en este nodo.
+     *
+     * @return paciente contenido en el nodo
+     */
+    public Paciente getPaciente() {
+        return paciente;
+    }
 
-    public void setPaciente(Paciente paciente) { // Método setter que recibe un paciente.
-        this.paciente = paciente; // Asigna el paciente recibido al atributo paciente.
-    } 
+    /**
+     * Asigna el paciente que almacenará este nodo.
+     *
+     * @param paciente paciente a asignar
+     */
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
 
-    public NodoPaciente getSiguiente() { // Método getter que retorna el siguiente nodo.
-        return siguiente; // Retorna la referencia al siguiente nodo.
-    } 
+    /**
+     * Retorna la referencia al siguiente nodo en la cola.
+     *
+     * @return siguiente nodo, o {@code null} si este es el último
+     */
+    public NodoPaciente getSiguiente() {
+        return siguiente;
+    }
 
-    public void setSiguiente(NodoPaciente siguiente) { // Método setter que recibe el siguiente nodo.
-        this.siguiente = siguiente; // Asigna el nodo recibido al atributo siguiente.
-    } 
-
-} 
+    /**
+     * Asigna la referencia al siguiente nodo en la cola.
+     *
+     * @param siguiente nodo que seguirá a este en la cola
+     */
+    public void setSiguiente(NodoPaciente siguiente) {
+        this.siguiente = siguiente;
+    }
+}

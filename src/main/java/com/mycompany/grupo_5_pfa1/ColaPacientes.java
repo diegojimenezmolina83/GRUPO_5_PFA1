@@ -1,23 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.grupo_5_pfa1;
 
 /**
- * Clase ColaPacientes.
- * Hereda de ColaBase para manejar pacientes.
+ * Cola especializada para la gestión de pacientes en el hospital.
+ * 
+ * Extiende {@link ColaBase} heredando toda la lógica FIFO de encolar,
+ * desencolar y eliminación por ficha. Esta clase existe para diferenciar
+ * semánticamente la cola regular de la preferencial sin duplicar código.
+ *
  * @author Grupo 5
+ * @version 1.0
+ * @see ColaBase
  */
-
-public class ColaPacientes extends ColaBase { // Inicio de la clase hija ColaPacientes.
+public class ColaPacientes extends ColaBase {
 
     /**
-     * Constructor vacío de ColaPacientes.
-     * @author Grupo 5Diego
+     * Construye una cola de pacientes vacía invocando al constructor de
+     * {@link ColaBase}.
      */
-    
-    public ColaPacientes() { // Inicio del constructor.
-        super(); // Llama al constructor de la clase padre ColaBase.
-    } 
-} 
+    public ColaPacientes() {
+        super();
+    }
+}

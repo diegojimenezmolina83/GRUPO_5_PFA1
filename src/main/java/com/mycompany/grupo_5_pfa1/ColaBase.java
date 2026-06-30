@@ -1,142 +1,153 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.grupo_5_pfa1;
+
 import java.text.SimpleDateFormat;
 
 /**
- * Clase ColaBase.
- * Implementa una cola usando nodos enlazados.
+ * Implementación de una cola genérica de pacientes mediante nodos enlazados.
+ * 
+ * Sigue la política FIFO (First In, First Out): los pacientes se insertan
+ * al final y se retiran desde el frente. La clase expone sus punteros
+ * {@code frente} y {@code fin} con visibilidad {@code protected} para que
+ * las subclases y las clases del mismo paquete puedan recorrer la estructura
+ * sin necesidad de métodos adicionales.
+ *
  * @author Grupo 5
+ * @version 1.0
+ * @see ColaPacientes
+ * @see NodoPaciente
+ * @see Paciente
  */
-
-public class ColaBase { 
-    protected NodoPaciente frente; // Guarda el primer nodo de la cola.
-    protected NodoPaciente fin; // Guarda el último nodo de la cola.
+public class ColaBase {
 
     /**
-     * Constructor vacío de la cola.
-     * @author Grupo 5
+     * Primer nodo de la cola (frente); {@code null} cuando la cola está vacía.
      */
-    
-    public ColaBase() { // Inicio del constructor.
-        this.frente = null; // Inicializa el frente como null.
-        this.fin = null; // Inicializa el final como null.
-    } 
+    protected NodoPaciente frente;
 
     /**
-     * Método que inserta un paciente al final de la cola.
-     * @author Grupo 5
-     * @param paciente Paciente que se desea insertar.
+     * Último nodo de la cola (fin); {@code null} cuando la cola está vacía.
      */
-    
-    public void encolar(Paciente paciente) { // Inicio del método encolar.
-        NodoPaciente nuevoNodo = new NodoPaciente(paciente); // Crea un nuevo nodo con el paciente recibido.
-        if (esVacia()) { // Valida si la cola está vacía.
-            frente = nuevoNodo; // Si está vacía, el nuevo nodo será el frente.
-            fin = nuevoNodo; // Si está vacía, el nuevo nodo también será el final.
-        } 
-        else { // Si la cola ya tiene elementos.
-            fin.setSiguiente(nuevoNodo); // Enlaza el último nodo actual con el nuevo nodo.
-            fin = nuevoNodo; // Actualiza el final de la cola al nuevo nodo.
-        } 
-    } 
+    protected NodoPaciente fin;
 
     /**
-     * Método que elimina y retorna el primer paciente de la cola.
-     * @author Grupo 5
-     * @return paciente que estaba al frente de la cola.
+     * Construye una cola vacía con {@code frente} y {@code fin} en {@code null}.
      */
-    
-    public Paciente desencolar() { // Inicio del método desencolar.
-        if (esVacia()) { // Valida si la cola está vacía.
-            return null; // Si está vacía, retorna null.
-        } 
-        Paciente pacienteAtendido = frente.getPaciente(); // Guarda el paciente que está en el frente.
-        frente = frente.getSiguiente(); // Mueve el frente al siguiente nodo.
-        if (frente == null) { // Valida si la cola quedó vacía después de desencolar.
-            fin = null; // Si quedó vacía, también limpia el final.
-        } 
-        return pacienteAtendido; // Retorna el paciente eliminado de la cola.
-    } 
+    public ColaBase() {
+        this.frente = null;
+        this.fin = null;
+    }
 
     /**
-     * Método que elimina un paciente específico por número de ficha.
-     * @author Grupo 5
-     * @param ficha Número de ficha que se desea eliminar.
-     * @return paciente eliminado, o null si no se encontró.
+     * Inserta un paciente al final de la cola.
+     *
+     * @param paciente paciente que se desea encolar; no debe ser {@code null}
      */
-    
-    public Paciente eliminarPorFicha(String ficha) { // Inicio del método eliminarPorFicha.
-        if (esVacia()) { // Valida si la cola está vacía.
-            return null; // Si está vacía, no hay nada que eliminar.
-        } 
-        if (frente.getPaciente().getFicha().equalsIgnoreCase(ficha)) { // Valida si el paciente a eliminar está al frente.
-            return desencolar(); // Si está al frente, se elimina usando desencolar.
-        } 
-        NodoPaciente anterior = frente; // Crea un auxiliar que inicia en el frente.
-        NodoPaciente actual = frente.getSiguiente(); // Crea otro auxiliar que inicia en el segundo nodo.
-        while (actual != null) { // Recorre la cola mientras existan nodos.
-            if (actual.getPaciente().getFicha().equalsIgnoreCase(ficha)) { // Valida si encontró la ficha buscada.
-                anterior.setSiguiente(actual.getSiguiente()); // Salta el nodo actual para eliminarlo de la cola.
-                if (actual == fin) { // Valida si el nodo eliminado era el último.
-                    fin = anterior; // Si era el último, actualiza el final.
-                } 
-                return actual.getPaciente(); // Retorna el paciente eliminado.
-            } 
-            anterior = actual; // Avanza el nodo anterior.
-            actual = actual.getSiguiente(); // Avanza el nodo actual.
-        } 
-        return null; // Retorna null si no encontró la ficha.
-    } 
+    public void encolar(Paciente paciente) {
+        NodoPaciente nuevoNodo = new NodoPaciente(paciente);
+        if (esVacia()) {
+            frente = nuevoNodo;
+            fin = nuevoNodo;
+        } else {
+            fin.setSiguiente(nuevoNodo);
+            fin = nuevoNodo;
+        }
+    }
 
     /**
-     * Método que indica si la cola está vacía.
-     * @author Grupo 5
-     * @return true si está vacía, false si tiene pacientes.
+     * Elimina y retorna el paciente que se encuentra al frente de la cola.
+     *
+     * @return paciente eliminado del frente, o {@code null} si la cola está vacía
      */
-    
-    public boolean esVacia() { // Inicio del método esVacia.
-        return frente == null; // Retorna true si el frente es null.
-    } 
+    public Paciente desencolar() {
+        if (esVacia()) {
+            return null;
+        }
+        Paciente pacienteAtendido = frente.getPaciente();
+        frente = frente.getSiguiente();
+        if (frente == null) {
+            fin = null;
+        }
+        return pacienteAtendido;
+    }
 
     /**
-     * Método que muestra todos los pacientes de la cola.
-     * @author Grupo 5
-     * @param distintivo Texto para identificar el tipo de cola.
+     * Busca y elimina el paciente cuyo número de ficha coincida con el
+     * valor indicado (comparación sin distinción de mayúsculas/minúsculas).
+     *
+     * @param ficha número de ficha del paciente que se desea eliminar
+     * @return paciente eliminado, o {@code null} si no se encontró la ficha
      */
-    
-    public void mostrarCola(String distintivo) { // Inicio del método mostrarCola.
-        NodoPaciente aux = frente; // Crea un auxiliar para recorrer la cola sin alterar el frente.
-        if (aux == null) { // Valida si no hay pacientes.
-            System.out.println(distintivo + " No hay fichas pendientes."); // Muestra mensaje de cola vacía.
-            return; // Sale del método.
-        } 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); // Define el formato del timestamp.
-        while (aux != null) { // Recorre la cola mientras existan nodos.
+    public Paciente eliminarPorFicha(String ficha) {
+        if (esVacia()) {
+            return null;
+        }
+        if (frente.getPaciente().getFicha().equalsIgnoreCase(ficha)) {
+            return desencolar();
+        }
+        NodoPaciente anterior = frente;
+        NodoPaciente actual = frente.getSiguiente();
+        while (actual != null) {
+            if (actual.getPaciente().getFicha().equalsIgnoreCase(ficha)) {
+                anterior.setSiguiente(actual.getSiguiente());
+                if (actual == fin) {
+                    fin = anterior;
+                }
+                return actual.getPaciente();
+            }
+            anterior = actual;
+            actual = actual.getSiguiente();
+        }
+        return null;
+    }
+
+    /**
+     * Indica si la cola no contiene ningún paciente.
+     *
+     * @return {@code true} si la cola está vacía; {@code false} en caso contrario
+     */
+    public boolean esVacia() {
+        return frente == null;
+    }
+
+    /**
+     * Imprime en la salida estándar los datos de todos los pacientes de la cola,
+     * precedidos por el texto {@code distintivo}.
+     * 
+     * Cada línea tiene el formato:
+     * {@code [distintivo] Ficha: X | Cedula: Y | Nombre: Z | Llegada: dd/MM/yyyy HH:mm:ss}
+     * 
+     * @param distintivo texto identificador del tipo de cola (por ejemplo,
+     *                   {@code "[REGULAR - VERDE]"})
+     */
+    public void mostrarCola(String distintivo) {
+        NodoPaciente aux = frente;
+        if (aux == null) {
+            System.out.println(distintivo + " No hay fichas pendientes.");
+            return;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        while (aux != null) {
             System.out.println(distintivo
                 + " Ficha: "    + aux.getPaciente().getFicha()
                 + " | Cedula: " + aux.getPaciente().getCedula()
                 + " | Nombre: " + aux.getPaciente().getNombre()
-                + " | Llegada: "+ sdf.format(aux.getPaciente().getFechaLlegada())); // Imprime todos los datos incluyendo timestamp.
-            aux = aux.getSiguiente(); // Avanza al siguiente nodo.
+                + " | Llegada: " + sdf.format(aux.getPaciente().getFechaLlegada()));
+            aux = aux.getSiguiente();
         }
-    } 
+    }
 
     /**
-     * Método que retorna la cantidad de pacientes en la cola.
-     * @author Grupo 5
-     * @return cantidad de pacientes.
+     * Cuenta y retorna el número de pacientes actualmente en la cola.
+     *
+     * @return cantidad de pacientes en la cola (0 si está vacía)
      */
-    
-    public int retornarTamaño() { // Inicio del método retornarTamaño.
-        int contador = 0; // Inicializa contador en cero.
-        NodoPaciente aux = frente; // Crea un auxiliar que inicia en el frente.
-        while (aux != null) { // Recorre la cola mientras existan nodos.
-            contador++; // Aumenta el contador.
-            aux = aux.getSiguiente(); // Avanza al siguiente nodo.
-        } 
-        return contador; // Retorna la cantidad de pacientes.
-    } 
-} 
+    public int retornarTamaño() {
+        int contador = 0;
+        NodoPaciente aux = frente;
+        while (aux != null) {
+            contador++;
+            aux = aux.getSiguiente();
+        }
+        return contador;
+    }
+}
