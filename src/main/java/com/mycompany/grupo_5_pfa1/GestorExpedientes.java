@@ -5,7 +5,7 @@
 package com.mycompany.grupo_5_pfa1;
 
 import java.util.Date;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  * Clase encargada de gestionar la creación y actualización
@@ -30,105 +30,213 @@ public class GestorExpedientes {
      * @param paciente Paciente que será atendido.
      * @param listaExpedientes Lista doble circular de expedientes.
      * @param listaBitacora Lista simple de bitácora del día.
-     * @param entrada Scanner para ingreso de datos.
      */
     public void procesarAtencion(Paciente paciente,
             ListaExpedientes listaExpedientes,
-            ListaBitacora listaBitacora,
-            Scanner entrada) {
+            ListaBitacora listaBitacora) {
 
         Date fechaHoraAtencion = new Date();
 
-        System.out.println("\n====================================");
-        System.out.println("DATOS DE LA FICHA SELECCIONADA");
-        System.out.println("====================================");
-        System.out.println("Ficha: " + paciente.getFicha());
-        System.out.println("Cédula: " + paciente.getCedula());
-        System.out.println("Nombre: " + paciente.getNombre());
+        JOptionPane.showMessageDialog(null,
+                "DATOS DE LA FICHA SELECCIONADA"
+                + "\n-----------------------------"
+                + "\nFicha: " + paciente.getFicha()
+                + "\nCédula: " + paciente.getCedula()
+                + "\nNombre registrado: " + paciente.getNombre(),
+                "Atender Paciente",
+                JOptionPane.INFORMATION_MESSAGE);
 
         Expediente expediente = listaExpedientes.buscarPorCedula(paciente.getCedula());
 
         if (expediente == null) {
 
-            System.out.println("\nPaciente " + paciente.getNombre() + " asiste a consulta por primera vez.");
+            JOptionPane.showMessageDialog(null,
+                    "Paciente " + paciente.getNombre()
+                    + " asiste a consulta por primera vez.",
+                    "Expediente nuevo",
+                    JOptionPane.INFORMATION_MESSAGE);
 
-            System.out.println("\nIngrese los datos del paciente:");
+            String nombreCompleto = JOptionPane.showInputDialog(null,
+                    "Ingrese el nombre completo del paciente:",
+                    paciente.getNombre());
 
-            System.out.print("Nombre completo: ");
-            String nombreCompleto = entrada.nextLine();
+            if (nombreCompleto == null || nombreCompleto.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                        "Nombre inválido. Atención cancelada.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-            System.out.print("Edad: ");
-            int edad = entrada.nextInt();
-            entrada.nextLine();
+            String textoEdad = JOptionPane.showInputDialog(null,
+                    "Ingrese la edad del paciente:",
+                    "Datos del Paciente",
+                    JOptionPane.PLAIN_MESSAGE);
 
-            System.out.print("Género: ");
-            String genero = entrada.nextLine();
+            if (textoEdad == null || textoEdad.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                        "Edad inválida. Atención cancelada.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-            expediente = new Expediente(paciente.getCedula(), nombreCompleto, edad, genero);
+            int edad = Integer.parseInt(textoEdad.trim());
+
+            String genero = JOptionPane.showInputDialog(null,
+                    "Ingrese el género del paciente:",
+                    "Datos del Paciente",
+                    JOptionPane.PLAIN_MESSAGE);
+
+            if (genero == null || genero.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                        "Género inválido. Atención cancelada.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            expediente = new Expediente(paciente.getCedula(),
+                    nombreCompleto.trim(),
+                    edad,
+                    genero.trim());
 
             listaExpedientes.insertarFinal(expediente);
 
         } else {
 
-            System.out.println("\nPaciente existente en expediente único.");
-            System.out.println("------------------------------------");
-            System.out.println(expediente.mostrarDatosGenerales());
+            JOptionPane.showMessageDialog(null,
+                    "Paciente existente en expediente único."
+                    + "\n-----------------------------"
+                    + "\n" + expediente.mostrarDatosGenerales(),
+                    "Expediente existente",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
 
-        System.out.println("\n====================================");
-        System.out.println("DATOS DE LA CITA ACTUAL");
-        System.out.println("====================================");
+        String motivoConsulta = JOptionPane.showInputDialog(null,
+                "Ingrese el motivo de consulta:",
+                "Datos de la Cita Actual",
+                JOptionPane.PLAIN_MESSAGE);
 
-        System.out.print("Motivo de consulta: ");
-        String motivoConsulta = entrada.nextLine();
+        if (motivoConsulta == null || motivoConsulta.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Motivo de consulta inválido. Atención cancelada.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        System.out.print("Diagnóstico: ");
-        String diagnostico = entrada.nextLine();
+        String diagnostico = JOptionPane.showInputDialog(null,
+                "Ingrese el diagnóstico:",
+                "Datos de la Cita Actual",
+                JOptionPane.PLAIN_MESSAGE);
 
-        System.out.print("Observaciones: ");
-        String observaciones = entrada.nextLine();
+        if (diagnostico == null || diagnostico.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Diagnóstico inválido. Atención cancelada.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        Cita cita = new Cita(fechaHoraAtencion, motivoConsulta, diagnostico, observaciones);
+        String observaciones = JOptionPane.showInputDialog(null,
+                "Ingrese las observaciones:",
+                "Datos de la Cita Actual",
+                JOptionPane.PLAIN_MESSAGE);
+
+        if (observaciones == null || observaciones.trim().isEmpty()) {
+            observaciones = "Sin observaciones.";
+        }
+
+        Cita cita = new Cita(fechaHoraAtencion,
+                motivoConsulta.trim(),
+                diagnostico.trim(),
+                observaciones.trim());
 
         expediente.agregarCita(cita);
 
-        System.out.println("\n====================================");
-        System.out.println("MEDICAMENTOS PRESCRITOS");
-        System.out.println("====================================");
+        String textoCantidadMedicamentos = JOptionPane.showInputDialog(null,
+                "Ingrese la cantidad de medicamentos prescritos:",
+                "Medicamentos Prescritos",
+                JOptionPane.PLAIN_MESSAGE);
 
-        System.out.print("Cantidad de medicamentos prescritos: ");
-        int cantidadMedicamentos = entrada.nextInt();
-        entrada.nextLine();
+        if (textoCantidadMedicamentos == null
+                || textoCantidadMedicamentos.trim().isEmpty()) {
+
+            textoCantidadMedicamentos = "0";
+        }
+
+        int cantidadMedicamentos = Integer.parseInt(textoCantidadMedicamentos.trim());
 
         for (int i = 0; i < cantidadMedicamentos; i++) {
 
-            System.out.println("\nMedicamento #" + (i + 1));
+            String nombreMedicamento = JOptionPane.showInputDialog(null,
+                    "Medicamento #" + (i + 1)
+                    + "\nIngrese el nombre del medicamento:",
+                    "Medicamentos Prescritos",
+                    JOptionPane.PLAIN_MESSAGE);
 
-            System.out.print("Nombre del medicamento: ");
-            String nombreMedicamento = entrada.nextLine();
+            if (nombreMedicamento == null || nombreMedicamento.trim().isEmpty()) {
+                nombreMedicamento = "No indicado";
+            }
 
-            System.out.print("Dosis: ");
-            String dosis = entrada.nextLine();
+            String dosis = JOptionPane.showInputDialog(null,
+                    "Ingrese la dosis:",
+                    "Medicamentos Prescritos",
+                    JOptionPane.PLAIN_MESSAGE);
 
-            System.out.print("Frecuencia: ");
-            String frecuencia = entrada.nextLine();
+            if (dosis == null || dosis.trim().isEmpty()) {
+                dosis = "No indicada";
+            }
 
-            System.out.print("Duración: ");
-            String duracion = entrada.nextLine();
+            String frecuencia = JOptionPane.showInputDialog(null,
+                    "Ingrese la frecuencia:",
+                    "Medicamentos Prescritos",
+                    JOptionPane.PLAIN_MESSAGE);
 
-            System.out.print("Indicaciones: ");
-            String indicaciones = entrada.nextLine();
+            if (frecuencia == null || frecuencia.trim().isEmpty()) {
+                frecuencia = "No indicada";
+            }
 
-            Medicamento medicamento = new Medicamento(nombreMedicamento, dosis, frecuencia, duracion, indicaciones);
+            String duracion = JOptionPane.showInputDialog(null,
+                    "Ingrese la duración:",
+                    "Medicamentos Prescritos",
+                    JOptionPane.PLAIN_MESSAGE);
+
+            if (duracion == null || duracion.trim().isEmpty()) {
+                duracion = "No indicada";
+            }
+
+            String indicaciones = JOptionPane.showInputDialog(null,
+                    "Ingrese las indicaciones:",
+                    "Medicamentos Prescritos",
+                    JOptionPane.PLAIN_MESSAGE);
+
+            if (indicaciones == null || indicaciones.trim().isEmpty()) {
+                indicaciones = "Sin indicaciones adicionales.";
+            }
+
+            Medicamento medicamento = new Medicamento(nombreMedicamento.trim(),
+                    dosis.trim(),
+                    frecuencia.trim(),
+                    duracion.trim(),
+                    indicaciones.trim());
 
             expediente.agregarMedicamento(medicamento);
         }
 
-        BitacoraCita bitacoraCita = new BitacoraCita( expediente.getCedula(), expediente.getNombreCompleto(),paciente.getFechaLlegada(), fechaHoraAtencion);
+        BitacoraCita bitacoraCita = new BitacoraCita(
+                expediente.getCedula(),
+                expediente.getNombreCompleto(),
+                paciente.getFechaLlegada(),
+                fechaHoraAtencion);
 
         listaBitacora.insertarFinal(bitacoraCita);
 
-        System.out.println("\nPaciente " + expediente.getNombreCompleto()
-                + ", su cita ha concluido.");
+        JOptionPane.showMessageDialog(null,
+                "Paciente " + expediente.getNombreCompleto()
+                + ", su cita ha concluido.",
+                "Cita finalizada",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }
