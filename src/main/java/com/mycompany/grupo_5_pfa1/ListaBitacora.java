@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.grupo_5_pfa1;
 
 /**
@@ -122,5 +118,79 @@ public class ListaBitacora {
         }
 
         return texto;
+    }
+
+    /**
+     * Retorna todas las citas atendidas durante la sesión en formato HTML,
+     * resaltando cada registro con un distintivo de color según su tiempo
+     * de espera:
+     * 
+     * Verde: de 1 a 30 segundos.
+     * Amarillo: más de 30 segundos y menos de 1 minuto.
+     * Rojo: más de 1 minuto.
+     * 
+     * Pensado para presentarse dentro de un {@code JOptionPane}, ya que
+     * Swing interpreta las etiquetas HTML dentro del mensaje.
+     *
+     * @author Camila Cabrera
+     */
+    public String mostrarBitacoraConColor() {
+
+        StringBuilder html = new StringBuilder("<html><body style='font-family:monospace; width:320px;'>");
+
+        if (primero == null) {
+
+            html.append("No hay citas registradas en la bitácora del día.");
+
+        } else {
+
+            NodoBitacora aux = primero;
+
+            while (aux != null) {
+
+                BitacoraCita cita = aux.getDato();
+                String colorHex = obtenerColorHex(cita.getCodigoColor());
+
+                html.append("<div style='color:").append(colorHex).append("; margin-bottom:8px;'>")
+                        .append("<b>[").append(cita.getCodigoColor()).append("]</b><br>")
+                        .append("Cédula: ").append(cita.getCedula()).append("<br>")
+                        .append("Nombre: ").append(cita.getNombreCompleto()).append("<br>")
+                        .append("Llegada: ").append(cita.getFechaHoraLlegada()).append("<br>")
+                        .append("Atención: ").append(cita.getFechaHoraAtencion()).append("<br>")
+                        .append("Tiempo de espera: ").append(cita.getTiempoEsperaSegundos())
+                        .append(" segundos</div><hr>");
+
+                aux = aux.getSiguiente();
+            }
+        }
+
+        html.append("</body></html>");
+
+        return html.toString();
+    }
+
+    /**
+     * Traduce el código de color textual de una cita (VERDE, AMARILLO,
+     * ROJO) a su valor hexadecimal correspondiente para uso en HTML.
+     *
+     * @param codigoColor Código de color calculado en {@link BitacoraCita}.
+     * @return Valor hexadecimal del color.
+     */
+    private String obtenerColorHex(String codigoColor) {
+
+        switch (codigoColor) {
+
+            case "VERDE":
+                return "#1B7A1B";
+
+            case "AMARILLO":
+                return "#B8860B";
+
+            case "ROJO":
+                return "#C0392B";
+
+            default:
+                return "#000000";
+        }
     }
 }
