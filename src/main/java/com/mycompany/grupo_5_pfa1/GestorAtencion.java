@@ -5,8 +5,8 @@ import javax.swing.JOptionPane;
 /**
  * Gestiona la asignación de fichas y la atención de pacientes en el hospital.
  *
- * Administra dos colas: preferencial y regular, aplicando la regla de prioridad:
- * por cada paciente regular atendido se atienden dos preferenciales.
+ * Administra dos colas: preferencial y regular, aplicando la regla de
+ * prioridad: por cada paciente regular atendido se atienden dos preferenciales.
  *
  * @author Grupo 5
  * @version 2.0
@@ -224,8 +224,8 @@ public class GestorAtencion {
     }
 
     /**
-     * Atiende al siguiente paciente aplicando la regla de prioridad:
-     * dos pacientes preferenciales por un paciente regular.
+     * Atiende al siguiente paciente aplicando la regla de prioridad: dos
+     * pacientes preferenciales por un paciente regular.
      *
      * @return Paciente atendido o null si no hay pacientes en cola.
      */
@@ -278,6 +278,28 @@ public class GestorAtencion {
                 listaBitacora);
 
         return pacienteAtendido;
+    }
+
+    /**
+     * Muestra la bitácora de citas atendidas durante la sesión actual, tanto en
+     * consola como en una ventana emergente. En la ventana se distingue
+     * visualmente cada registro según su tiempo de espera:
+     *
+     * Verde: de 1 a 30 segundos. Amarillo: más de 30 segundos y menos de 1
+     * minuto. Rojo: más de 1 minuto.
+     *
+     * @author Camila Cabrera
+     */
+    public void consultarBitacoraDelDia() {
+
+        System.out.println("\n--- Bitácora de Citas del Día ---");
+        System.out.println(listaBitacora.mostrarBitacora());
+
+        JOptionPane.showMessageDialog(
+                null,
+                listaBitacora.mostrarBitacoraConColor(),
+                "Bitácora de Citas del Día",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
