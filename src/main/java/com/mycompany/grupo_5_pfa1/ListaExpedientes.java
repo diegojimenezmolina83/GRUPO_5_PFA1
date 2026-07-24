@@ -4,6 +4,10 @@
  */
 package com.mycompany.grupo_5_pfa1;
 
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
 /**
  * Lista doble circular para almacenar el expediente único de pacientes.
  * Permite insertar expedientes, buscar por cédula y navegar hacia adelante
@@ -230,6 +234,58 @@ public class ListaExpedientes {
         actual = actual.getAnterior();
 
         return actual.getDato().mostrarExpedienteCompleto();
+    }
+
+    /**
+     * Recorre recursivamente la lista doble circular permitiendo al usuario
+     * navegar entre los expedientes registrados.
+     *
+     * En cada llamada muestra el expediente contenido en el nodo recibido y,
+     * según la opción elegida por el usuario, se invoca recursivamente sobre
+     * el nodo anterior o el siguiente. La recursión termina cuando el usuario
+     * elige "Cerrar" o cierra la ventana.
+     *
+     * @param nodo Nodo que se desea mostrar en la llamada actual.
+     */
+    public void navegarRecursivo(NodoExpediente nodo) {
+
+        if (nodo == null) {
+
+            JOptionPane.showMessageDialog(null,
+                    "No hay expedientes registrados.",
+                    "Consulta de Expediente Único de Pacientes",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        actual = nodo;
+
+        JTextArea area = new JTextArea(nodo.getDato().mostrarExpedienteCompleto(),
+                20, 45);
+        area.setEditable(false);
+        area.setLineWrap(true);
+        area.setWrapStyleWord(true);
+        area.setCaretPosition(0);
+        JScrollPane scroll = new JScrollPane(area);
+
+        String[] opciones = {"Anterior", "Siguiente", "Cerrar"};
+
+        int seleccion = JOptionPane.showOptionDialog(
+                null,
+                scroll,
+                "Consulta de Expediente Único de Pacientes",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                opciones,
+                opciones[1]);
+
+        switch (seleccion) {
+            case 0 -> navegarRecursivo(nodo.getAnterior());
+            case 1 -> navegarRecursivo(nodo.getSiguiente());
+            default -> {
+            }
+        }
     }
 
     /**

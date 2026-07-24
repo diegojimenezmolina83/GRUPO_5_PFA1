@@ -99,7 +99,8 @@ public class GRUPO_5_PFA1 {
             "4. Mostrar Fichas Pendientes",
             "5. Mostrar Quejas Recibidas",
             "6. Consultar Bitácora de Citas del Día",
-            "7. Regresar"
+            "7. Consultar Expediente Único de Pacientes",
+            "8. Regresar"
         };
 
         boolean enSubmenu = true;
@@ -122,6 +123,7 @@ public class GRUPO_5_PFA1 {
                 case 3 -> mostrarFichasPendientes(colaRegular, colaPreferencial);
                 case 4 -> pilaQuejas.mostrarPila();
                 case 5 -> gestor.consultarBitacoraDelDia();
+                case 6 -> gestor.consultarExpedientes();
                 default -> enSubmenu = false;
             }
         }
@@ -215,7 +217,8 @@ public class GRUPO_5_PFA1 {
             "  4. Mostrar Fichas Pendientes             — Lista ambas colas con distintivo de color\n" +
             "  5. Mostrar Quejas Recibidas              — Lista todas las quejas registradas\n" +
             "  6. Consultar Bitácora de Citas del Día   — Lista las citas atendidas, coloreadas según tiempo de espera\n" +
-            "  7. Regresar                              — Vuelve al menú principal";
+            "  7. Consultar Expediente Único de Pacientes — Navega los expedientes uno por uno (adelante/atrás)\n" +
+            "  8. Regresar                              — Vuelve al menú principal";
 
         JOptionPane.showMessageDialog(
             null,

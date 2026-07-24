@@ -303,6 +303,20 @@ public class GestorAtencion {
     }
 
     /**
+     * Permite al usuario navegar los expedientes registrados uno por uno.
+     *
+     * Delegará la navegación al método recursivo
+     * {@link ListaExpedientes#navegarRecursivo(NodoExpediente)} definido sobre
+     * la lista doble circular, iniciando desde el primer expediente.
+     *
+     * @author Israel Apuy
+     */
+    public void consultarExpedientes() {
+
+        listaExpedientes.navegarRecursivo(listaExpedientes.getPrimero());
+    }
+
+    /**
      * Retorna la lista de expedientes del sistema.
      *
      * @return Lista doble circular de expedientes.
