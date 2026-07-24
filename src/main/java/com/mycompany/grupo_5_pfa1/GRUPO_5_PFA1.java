@@ -98,7 +98,8 @@ public class GRUPO_5_PFA1 {
             "3. Abandonar Cola de Pacientes",
             "4. Mostrar Fichas Pendientes",
             "5. Mostrar Quejas Recibidas",
-            "6. Regresar"
+            "6. Consultar Bitácora de Citas del Día",
+            "7. Regresar"
         };
 
         boolean enSubmenu = true;
@@ -120,6 +121,7 @@ public class GRUPO_5_PFA1 {
                 case 2 -> pilaQuejas.abandonarColaInteractivo(colaRegular, colaPreferencial);
                 case 3 -> mostrarFichasPendientes(colaRegular, colaPreferencial);
                 case 4 -> pilaQuejas.mostrarPila();
+                case 5 -> gestor.consultarBitacoraDelDia();
                 default -> enSubmenu = false;
             }
         }
@@ -200,19 +202,20 @@ public class GRUPO_5_PFA1 {
     private static void mostrarAyuda() {
         String mensaje =
             "=== AYUDA — Sistema Hospital Su Salud ===\n\n" +
-            "Versión: Avance 1 V 1.0.1\n\n" +
+            "Versión: Avance 2 V 2.0\n\n" +
             "Desarrollado por Grupo 5:\n" +
             "  • [Camila Cabrera Camacho]\n" +
             "  • [Diego Armando Jimenez]\n" +
             "  • [Ismael Sanbria Moya]\n\n" +
             "  • [Israel Apuy Martinez]\n\n" +
             "Opciones disponibles en Gestionar Llegada de Pacientes:\n" +
-            "  1. Seleccionar Ficha         — Registra un paciente (Regular o Preferencial)\n" +
-            "  2. Atender Paciente          — Atiende según regla 2 preferenciales : 1 regular\n" +
-            "  3. Abandonar Cola            — Retira una ficha y registra la queja\n" +
-            "  4. Mostrar Fichas Pendientes — Lista ambas colas con distintivo de color\n" +
-            "  5. Mostrar Quejas Recibidas  — Lista todas las quejas registradas\n" +
-            "  6. Regresar                 — Vuelve al menú principal";
+            "  1. Seleccionar Ficha                    — Registra un paciente (Regular o Preferencial)\n" +
+            "  2. Atender Paciente                     — Atiende al paciente y registra su expediente y cita\n" +
+            "  3. Abandonar Cola                       — Retira una ficha y registra la queja\n" +
+            "  4. Mostrar Fichas Pendientes             — Lista ambas colas con distintivo de color\n" +
+            "  5. Mostrar Quejas Recibidas              — Lista todas las quejas registradas\n" +
+            "  6. Consultar Bitácora de Citas del Día   — Lista las citas atendidas, coloreadas según tiempo de espera\n" +
+            "  7. Regresar                              — Vuelve al menú principal";
 
         JOptionPane.showMessageDialog(
             null,
