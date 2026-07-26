@@ -7,7 +7,7 @@ package com.mycompany.grupo_5_pfa1;
 /**
  * Clase nodo para almacenar un medicamento dentro de una lista simple circular.
  *
- * @author Diego
+ * @author Grupo 5
  */
 public class NodoMedicamento {
 

@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * 
  *
  * @author Grupo 5
- * @version 1.0.1
+ * @version 2.0
  */
 public class GRUPO_5_PFA1 {
 

@@ -9,7 +9,7 @@ import java.util.Date;
  * completo y la fecha y hora de llegada del paciente.
  *
  * @author Grupo 5
- * @version 1.0
+ * @version 2.0
  */
 public class Paciente {
 

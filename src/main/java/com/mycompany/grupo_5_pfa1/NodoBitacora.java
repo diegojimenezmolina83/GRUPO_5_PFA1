@@ -8,7 +8,7 @@ package com.mycompany.grupo_5_pfa1;
  * Clase nodo para almacenar una cita atendida dentro de la lista simple
  * de bitácora del día.
  *
- * @author Diego
+ * @author Grupo 5
  */
 public class NodoBitacora {
 

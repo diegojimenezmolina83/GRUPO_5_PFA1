@@ -11,7 +11,7 @@ import java.util.Date;
  * Esta clase se utiliza en el Avance 2 para guardar el histórico
  * de citas dentro del expediente del paciente.
  *
- * @author Diego
+ * @author Grupo 5
  */
 public class Cita {
 

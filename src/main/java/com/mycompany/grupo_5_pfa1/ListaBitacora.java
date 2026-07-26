@@ -3,7 +3,7 @@ package com.mycompany.grupo_5_pfa1;
 /**
  * Lista simple para almacenar la bitácora de citas atendidas durante el día.
  *
- * @author Diego
+ * @author Grupo 5
  */
 public class ListaBitacora {
 

@@ -9,7 +9,7 @@ package com.mycompany.grupo_5_pfa1;
  * Esta clase almacena los datos generales del paciente, su histórico
  * de citas y su histórico de medicamentos.
  *
- * @author Diego
+ * @author Grupo 5
  */
 public class Expediente {
 

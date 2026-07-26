@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
  * Permite insertar expedientes, buscar por cédula y navegar hacia adelante
  * o hacia atrás entre expedientes.
  *
- * @author Diego
+ * @author Grupo 5
  */
 public class ListaExpedientes {
 

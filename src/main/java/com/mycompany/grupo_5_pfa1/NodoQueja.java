@@ -8,7 +8,7 @@ package com.mycompany.grupo_5_pfa1;
  * la cima apunta al nodo más reciente.
  *
  * @author Grupo 5
- * @version 1.0
+ * @version 2.0
  * @see PilaBase
  * @see Queja
  */

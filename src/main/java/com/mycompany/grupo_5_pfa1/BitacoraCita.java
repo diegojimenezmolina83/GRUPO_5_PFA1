@@ -10,7 +10,7 @@ import java.util.Date;
  * Clase que representa una cita atendida durante la sesión actual.
  * Se utiliza para alimentar la bitácora de citas del día.
  *
- * @author Diego
+ * @author Grupo 5
  */
 public class BitacoraCita {
 

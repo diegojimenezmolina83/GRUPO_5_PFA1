@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * Clase encargada de gestionar la creación y actualización
  * del expediente único de pacientes durante la atención médica.
  *
- * @author Diego
+ * @author Grupo 5
  */
 public class GestorExpedientes {
 

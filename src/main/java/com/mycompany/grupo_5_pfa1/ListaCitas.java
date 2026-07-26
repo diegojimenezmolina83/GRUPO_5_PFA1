@@ -7,7 +7,7 @@ package com.mycompany.grupo_5_pfa1;
 /**
  * Lista simple circular para almacenar el histórico de citas de un paciente.
  *
- * @author Diego
+ * @author Grupo 5
  */
 public class ListaCitas {
 

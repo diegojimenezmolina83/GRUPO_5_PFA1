@@ -9,7 +9,7 @@ package com.mycompany.grupo_5_pfa1;
  * Esta clase se utiliza en el Avance 2 para guardar el histórico
  * de medicamentos dentro del expediente del paciente.
  *
- * @author Diego
+ * @author Grupo 5
  */
 public class Medicamento {
 
